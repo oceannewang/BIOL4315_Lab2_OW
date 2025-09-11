@@ -27,3 +27,36 @@ rqcCycleQualityBoxPlot(qcRes)
 ```{r 2.5.2 Sequence Content Per Base/Cycle, echo=TRUE}
 rqcCycleBaseCallsLinePlot(qcRes)
 ```
+
+```{r 2.5.3 Read Frequency Plot, echo=TRUE}
+rqcReadFrequencyPlot(qcRes)
+```
+```{r 2.5.4-1 Over-represented k-mers & adapter overrepresentation plots, echo=TRUE}
+library(fastqcr)
+
+# Aggregating Multiple FastQC Reports into a Data Frame 
+
+# Demo QC directory containing zipped FASTQC reports
+qc.dir <- system.file("fastqc_results", package = "fastqcr")
+qc <- qc_aggregate(qc.dir)
+qc
+```
+
+```{r 2.5.4-2 Inspecting QC Problems, echo=TRUE}
+# See which modules failed in the most samples
+qc_fails(qc, "module")
+
+# Or, see which samples failed the most
+qc_fails(qc, "sample")
+
+# Building Multi QC Reports
+qc_report(qc.dir, result.file = "multi-qc-report" )
+
+# Building One-Sample QC Reports (+ Interpretation)
+qc.file <- system.file("fastqc_results", "S1_fastqc.zip", package = "fastqcr")
+```
+
+```{r 2.5.4-3 View the report rendered by R functions, echo=TRUE}
+qc_report(qc.file, result.file = "one-sample-report",
+          interpret = TRUE)
+```
