@@ -6,3 +6,4 @@
 *.gz
 *.fastq
 .DS_Store
+/sequali*
