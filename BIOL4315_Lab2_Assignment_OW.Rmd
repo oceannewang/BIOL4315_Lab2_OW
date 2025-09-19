@@ -1,0 +1,25 @@
+---
+title: "BIOL4315_Lab2_assignment_OW"
+author: "OceanneYW"
+date: "2025-09-17"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Long Reads QC
+```{bash installing filtlong, eval=FALSE}
+conda search filtlong
+
+conda create --name filtlong_env
+conda activate filtlong_env
+conda install filtlong=version -c channel 
+```
+
+```{bash 75%, eval=FALSE}
+filtlong 
+
+
+```
