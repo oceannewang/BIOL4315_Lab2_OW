@@ -9,7 +9,7 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-## Long Reads QC
+## 3.Install filtlong Long Reads QC
 ```{bash installing filtlong, eval=FALSE}
 conda search filtlong
 
@@ -18,18 +18,33 @@ conda activate filtlong_env
 conda install filtlong=version -c channel 
 ```
 
+## 4.Filtlong 75% original 
 ```{bash 75%, eval=FALSE}
 filtlong -p 75 ERR1539001.fastq > ERR1539001_filtlong75.fastq
 
 ```
 
-## 6. Differences on filtlong75 and original of ERR1539001
+## 5.Sequali on filtered
+```{bash filtered, eval=FALSE}
+deactivate
+
+conda activate sequali_env
+
+# Check software installation and proper loading
+sequali -h
+
+# cd into the repos/BIOL4315_Lab2_OW
+sequali --ourdir ./sequali_ERR1539001_75filt ERR1539001_filtlong75.fastq 
+
+```
+
+## 6.Differences on filtlong75 and original of ERR1539001
 - The input file sizes were different, it is 0.15Gb smaller post filtering,
 The mean length has increased in the filtered summary which makes sense as 
 filtlong has trimmed out the shorter 25% in the original file. The range is also 
 different 
 
-##7 Sequali report on Github 
+##7.Sequali report on Github 
 
 ## 8. Download the Illumina reads 
 ```{bash, eval=FALSE}
@@ -38,3 +53,32 @@ wget -nc ftp://ftp.sra.ebi.ac.uk/vol1/fastq/ERR112/040/ERR11203340/ERR11203340_2
 ```
 
 ## 9.1 Sequence quality per base per cycle, quality score drop below 2 
+### 9.1.1
+```{r ERR11203340, eval=FALSE}
+# ERR11203340_1.fastq
+sequali --outdir ./sequali_ERR11203340_1 ERR11203340_1.fastq
+
+#ERR11203340_2.fastq
+sequali --outdir ./sequali_ERR11203340_2 ERR11203340_2.fastq
+```
+Seem like there are both short reads with mean 101 bp.  Using *ShortRead* library instead.
+
+```{r ShortRead, eval=TRUE}
+library(Rqc)
+
+p <- rqcCycleQualityBoxPlot(rqc(path = "/Users/owang/repos/BIOL4315_Lab2_OW/ERR11203340", pattern = ".fastq.gz", openBrowser = FALSE))
+
+p
+```
+No bases have quality score dropped below 2
+
+```
+fq = readFastq("/Users/owang/repos/BIOL4315_Lab2_OW/ERR11203340_1.fastq")
+
+# Get quality score per base as a matrix
+qualityPerBase = as(quality(fq), "matrix")
+
+
+# Get number of bases per read that have quality score below 2
+qualityScore = rowSums(qualityPerBase <= 2)
+```
