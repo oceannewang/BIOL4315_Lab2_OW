@@ -28,8 +28,13 @@ filtlong -p 75 ERR1539001.fastq > ERR1539001_filtlong75.fastq
 The mean length has increased in the filtered summary which makes sense as 
 filtlong has trimmed out the shorter 25% in the original file. The range is also 
 different 
+
+##7 Sequali report on Github 
+
 ## 8. Download the Illumina reads 
 ```{bash, eval=FALSE}
 wget -nc ftp://ftp.sra.ebi.ac.uk/vol1/fastq/ERR112/040/ERR11203340/ERR11203340_1.fastq.gz
 wget -nc ftp://ftp.sra.ebi.ac.uk/vol1/fastq/ERR112/040/ERR11203340/ERR11203340_2.fastq.gz
 ```
+
+## 9.1 Sequence quality per base per cycle, quality score drop below 2 

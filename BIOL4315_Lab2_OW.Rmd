@@ -9,6 +9,7 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
+Using the r package to do qc on sample data from the package
 ```{r 2.5 Quality check illumina reads, echo=TRUE}
 #Load the package
 library(Rqc)
@@ -69,8 +70,8 @@ sequali --outdir /sequali_reports path/to/ERR1539001.fastq.gz
 ```
 
 ```{r 2.5.5.1 What to look for in a sequali output, echo=FALSE, eval=FALSE}
-N50: 6681
-Mean: 4888.03
+N50: 6681 (over 5k is recommended)
+Mean: 4888.03 
 Median: 4870?
 
 
@@ -135,7 +136,7 @@ ShortRead::writeFastq( fq[which(qcount == 0)], paste(getwd(), "Qfiltered3.fastq"
 f <- FastqStreamer(fastqFile,readerBlockSize=1000) 
 
 # we set up a while loop to call yield() function to
-# go through the file
+# go through the file 
 while(length(fq <- yield(f))) {
   
     # remove reads where all quality scores are < 20 
