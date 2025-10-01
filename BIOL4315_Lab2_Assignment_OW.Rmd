@@ -66,13 +66,31 @@ Seem like there are both short reads with mean 101 bp.  Using *ShortRead* librar
 ```{r ShortRead, eval=TRUE}
 library(Rqc)
 
-p <- rqcCycleQualityBoxPlot(rqc(path = "/Users/owang/repos/BIOL4315_Lab2_OW/ERR11203340", pattern = ".fastq.gz", openBrowser = FALSE))
+qualityBoxPlot <- rqcCycleQualityBoxPlot(rqc(path = "/Users/owang/repos/BIOL4315_Lab2_OW/ERR11203340", pattern = ".fastq.gz", openBrowser = FALSE))
 
-p
+qualityBoxPlot
 ```
-No bases have quality score dropped below 2
 
+No bases have quality score dropped below 2.
+
+```{r Sequence Content, eval=TRUE}
+nContentPlot <- rqcCycleBaseCallsLinePlot(rqc(path = "/Users/owang/repos/BIOL4315_Lab2_OW/ERR11203340", pattern = ".fastq.gz", openBrowser = FALSE))
+
+nContentPlot
 ```
+
+No Ns can be seen anywhere, it is very high quality.
+
+
+```{r Read frequency plot, eval=TRUE}
+readFreqPlot <- rqcReadFrequencyPlot(rqc(path = "/Users/owang/repos/BIOL4315_Lab2_OW/ERR11203340", pattern = ".fastq.gz", openBrowser = FALSE))
+
+readFreqPlot
+```
+## 10.Trim short reads based on quality score
+```{r QuasR, eval=TRUE}
+#BiocManager::install("QuasR")
+library(QuasR)
 fq = readFastq("/Users/owang/repos/BIOL4315_Lab2_OW/ERR11203340_1.fastq")
 
 # Get quality score per base as a matrix
