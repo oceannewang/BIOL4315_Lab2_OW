@@ -52,8 +52,7 @@ wget -nc ftp://ftp.sra.ebi.ac.uk/vol1/fastq/ERR112/040/ERR11203340/ERR11203340_1
 wget -nc ftp://ftp.sra.ebi.ac.uk/vol1/fastq/ERR112/040/ERR11203340/ERR11203340_2.fastq.gz
 ```
 
-## 9.1 Sequence quality per base per cycle, quality score drop below 2 
-### 9.1.1
+### 9.1 Sequence quality per base per cycle, quality score drop below 2 
 ```{r ERR11203340, eval=FALSE}
 # ERR11203340_1.fastq
 sequali --outdir ./sequali_ERR11203340_1 ERR11203340_1.fastq
@@ -73,6 +72,7 @@ qualityBoxPlot
 
 No bases have quality score dropped below 2.
 
+### 9.2 Sequence content per base per cycle
 ```{r Sequence Content, eval=TRUE}
 nContentPlot <- rqcCycleBaseCallsLinePlot(rqc(path = "/Users/owang/repos/BIOL4315_Lab2_OW/ERR11203340", pattern = ".fastq.gz", openBrowser = FALSE))
 
@@ -81,22 +81,29 @@ nContentPlot
 
 No Ns can be seen anywhere, it is very high quality.
 
-
+### 9.3 Read frequency plot
 ```{r Read frequency plot, eval=TRUE}
 readFreqPlot <- rqcReadFrequencyPlot(rqc(path = "/Users/owang/repos/BIOL4315_Lab2_OW/ERR11203340", pattern = ".fastq.gz", openBrowser = FALSE))
 
 readFreqPlot
 ```
+All sequences have more than 1 read.
+
 ## 10.Trim short reads based on quality score
+
+Based on the graph generated from Q9.1, there are no reads with quality below 20. Therefore, no need for trimming.
+
+If there are reads below Q20, then the following steps are taken.
 ```{r QuasR, eval=TRUE}
 #BiocManager::install("QuasR")
+
 library(QuasR)
-fq = readFastq("/Users/owang/repos/BIOL4315_Lab2_OW/ERR11203340_1.fastq")
-
-# Get quality score per base as a matrix
-qualityPerBase = as(quality(fq), "matrix")
+fq1 = readFastq("/Users/owang/repos/BIOL4315_Lab2_OW/ERR11203340_1.fastq")
+fq2 = readFastq("/Users/owang/repos/BIOL4315_Lab2_OW/ERR11203340_2.fastq")
 
 
-# Get number of bases per read that have quality score below 2
-qualityScore = rowSums(qualityPerBase <= 2)
+QuasR::preprocessReads()
+
 ```
+
+## 11. Stage, commit and push to Github
