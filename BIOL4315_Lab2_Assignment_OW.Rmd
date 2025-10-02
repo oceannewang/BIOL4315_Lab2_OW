@@ -1,5 +1,5 @@
 ---
-title: "BIOL4315_Lab2_assignment_OW"
+title: "BIOL4315_Lab2_assignment_OW" (1pt)
 author: "OceanneYW"
 date: "2025-09-17"
 output: html_document
@@ -9,7 +9,7 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-## 3.Install filtlong Long Reads QC
+## 3.Install filtlong Long Reads QC (1pt)
 ```{bash installing filtlong, eval=FALSE}
 conda search filtlong
 
@@ -65,12 +65,19 @@ Seem like there are both short reads with mean 101 bp.  Using *ShortRead* librar
 ```{r ShortRead, eval=TRUE}
 library(Rqc)
 
-qualityBoxPlot <- rqcCycleQualityBoxPlot(rqc(path = "/Users/owang/repos/BIOL4315_Lab2_OW/ERR11203340", pattern = ".fastq.gz", openBrowser = FALSE))
+qualityBoxPlot <- rqcReadQualityBoxPlot(rqc(path = "/Users/owang/repos/BIOL4315_Lab2_OW/ERR11203340", pattern = ".fastq", openBrowser = FALSE))
 
 qualityBoxPlot
 ```
 
-No bases have quality score dropped below 2.
+
+```{r, eval=TRUE}
+
+qualityCycleBoxPlot <- rqcCycleQualityBoxPlot(rqc(path = "/Users/owang/repos/BIOL4315_Lab2_OW/ERR11203340", pattern = ".fastq", openBrowser = FALSE))
+
+qualityCycleBoxPlot
+```
+Both sequences seem to have reads quality below 2 with subset 1 around cycle 101.
 
 ### 9.2 Sequence content per base per cycle
 ```{r Sequence Content, eval=TRUE}
@@ -102,8 +109,14 @@ fq1 = readFastq("/Users/owang/repos/BIOL4315_Lab2_OW/ERR11203340_1.fastq")
 fq2 = readFastq("/Users/owang/repos/BIOL4315_Lab2_OW/ERR11203340_2.fastq")
 
 
-QuasR::preprocessReads()
+#QuasR::preprocessReads()
 
 ```
 
 ## 11. Stage, commit and push to Github
+
+```{r, eval=TRUE}
+test <- 
+
+test
+```
